@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Pioneering orbital heliography by precisely reflecting sunlight from Earth's surface to satellites. Calculations to a thousandths of a second.">
+  <meta name="author" content="Ryu Izawa">
+
+  <title>The Orbital Heliography Project</title>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <!-- NAVIGATION -->
+  <header class="navbar-container">
+    <div class="container">
+      <div class="nav-wrap">
+        <a class="nav-brand" href="#page-top">
+          <!-- Heliograph SVG Logo -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <span>Orbital Heliography</span>
+        </a>
+        
+        <nav aria-label="Main Navigation">
+          <ul class="nav-links">
+            <li><a class="nav-link" href="#introduction">Introduction</a></li>
+            <li><a class="nav-link" href="#history">History</a></li>
+            <li><a class="nav-link" href="#physics">Physics</a></li>
+            <li><a class="nav-link" href="#team">The Team</a></li>
+            <li><a class="nav-link" href="#calendar">Calendar</a></li>
+          </ul>
+        </nav>
+
+        <div class="hamburger" aria-label="Open mobile menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="page-top">
+    
+    <!-- SECTION 1: INTRODUCTION (White Technical Journal Paper) -->
+    <section class="section section-paper" id="introduction">
+      <div class="container">
+        <div class="paper-grid reveal">
+          <div class="paper-text-box">
+            <div class="hero-subtitle">Archival Entry // Surface-to-Orbit Solar Signaling</div>
+            <h1 class="paper-title">Orbital Heliography</h1>
+            <p class="paper-description">
+              Welcome. I am <strong>Ryu Izawa</strong>, and this is a documentation of our attempts at a pioneering, never-before-done activity: <strong>Orbital Heliography</strong>. 
+            </p>
+            <p class="paper-description" style="font-size: 1.15rem; margin-top: -1.5rem;">
+              By precisely tracking the relative positions of the Sun and Earth-orbiting satellites to within <strong>one-thousandth of a second</strong>, we use specialized surface mirrors to reflect solar light directly to orbital receivers. Through this optical synchronization, we are opening a new channel for interstellar and orbital heliographic communication.
+            </p>
+            
+            <div class="paper-math">
+              <span>Required Angle Precision:</span>
+              <code>&Delta;&theta; = \pm 0.001\text{s}</code>
+            </div>
+          </div>
+          
+          <div class="paper-diagram-container">
+            <div class="paper-diagram-box">
+              <!-- Technical SVG Drawing: Celestial Heliography coordinate calculations -->
+              <svg viewBox="0 0 320 320" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" class="blueprint-svg">
+                <!-- Earth Polar Axis (Perfecty Vertical) -->
+                <line x1="160" y1="70" x2="160" y2="270" stroke="var(--text-muted, currentColor)" stroke-width="0.8" stroke-dasharray="3,3" />
+                <text x="160" y="62" fill="var(--text-muted, currentColor)" font-family="var(--font-mono)" font-size="7" text-anchor="middle">North Pole</text>
+                <text x="160" y="278" fill="var(--text-muted, currentColor)" font-family="var(--font-mono)" font-size="7" text-anchor="middle">South Pole</text>
+                
+                <!-- Orbit Track - Back Half (Dotted background half, drawn behind Earth, rotated by -45 degrees) -->
+                <g transform="rotate(-45, 160, 170)">
+                  <path d="M 40 170 A 120 30 0 0 1 280 170" stroke="var(--accent-cyan)" stroke-width="0.8" stroke-dasharray="4,4" />
+                </g>
+                
+                <!-- Earth Sphere (Central) -->
+                <circle cx="160" cy="170" r="60" stroke="var(--text-secondary, currentColor)" stroke-width="1.2" fill="#fff" />
+                <text x="160" y="174" fill="var(--text-muted, currentColor)" font-family="var(--font-heading)" font-size="10" font-style="italic" text-anchor="middle">Earth</text>
+                
+                <!-- Earth Equator (Perfecty Horizontal Ellipse) -->
+                <ellipse cx="160" cy="170" rx="60" ry="15" stroke="var(--text-muted, currentColor)" stroke-width="0.8" stroke-dasharray="2,2" />
+                <text x="225" y="174" fill="var(--text-muted, currentColor)" font-family="var(--font-mono)" font-size="7">Equator</text>
+                
+                <!-- Earth Grid Lines: Arctic Circle, Antarctic Circle (Adds rich technical blueprint feel) -->
+                <ellipse cx="160" cy="115" rx="24" ry="6" stroke="var(--text-muted, currentColor)" stroke-width="0.6" stroke-dasharray="2,2" />
+                <text x="160" y="108" fill="var(--text-muted, currentColor)" font-family="var(--font-mono)" font-size="6" text-anchor="middle">Arctic Circle</text>
+                <ellipse cx="160" cy="225" rx="24" ry="6" stroke="var(--text-muted, currentColor)" stroke-width="0.6" stroke-dasharray="2,2" />
+                
+                <!-- Orbit Track - Front Half (Solid foreground half, drawn in front of Earth, rotated by -45 degrees) -->
+                <g transform="rotate(-45, 160, 170)">
+                  <path d="M 40 170 A 120 30 0 0 0 280 170" stroke="var(--accent-cyan)" stroke-width="1.2" />
+                  <text x="70" y="194" fill="var(--accent-cyan)" font-family="var(--font-mono)" font-size="8" transform="rotate(12, 70, 194)">Orbit</text>
+                  
+                  <!-- Satellite (Sat) on Orbit (North of Equator, rotated into position) -->
+                  <g transform="translate(280, 170)">
+                    <circle cx="0" cy="0" r="3.5" fill="var(--accent-cyan)" />
+                    <line x1="-8" y1="0" x2="8" y2="0" stroke="var(--accent-cyan)" stroke-width="1.2" />
+                    <rect x="-3" y="-6" width="6" height="4" stroke="var(--accent-cyan)" fill="#fff" stroke-width="0.8" />
+                    <!-- Counter-rotate text by 45 degrees so it stays upright -->
+                    <text x="10" y="3" fill="var(--accent-cyan)" font-family="var(--font-mono)" font-size="8" font-weight="bold" transform="rotate(45)">Sat</text>
+                  </g>
+                </g>
+                
+                <!-- Heliostat on Earth's Surface (Inside Earth disc, slightly towards centerline, 36 degrees North) -->
+                <circle cx="185" cy="135" r="2.5" fill="var(--text-primary, currentColor)" />
+                <!-- Mathematically oriented mirror: perpendicular to bisector of Sun/Sat rays -->
+                <line x1="182" y1="127" x2="188" y2="143" stroke="var(--text-primary, currentColor)" stroke-width="2.5" />
+                <!-- Mirror mount pole -->
+                <line x1="185" y1="135" x2="181" y2="141" stroke="var(--text-primary, currentColor)" stroke-width="1" />
+                <text x="138" y="142" fill="var(--text-primary, currentColor)" font-family="var(--font-mono)" font-size="7.5">Heliostat</text>
+                
+                <!-- Sun (Left side, North of equator) -->
+                <circle cx="40" cy="120" r="10" stroke="var(--accent-gold)" stroke-width="1.2" />
+                <path d="M40 105 L40 101 M40 135 L40 139 M25 120 L21 120 M55 120 L59 120 M29 109 L26 106 M51 131 L54 134 M29 131 L26 134 M51 109 L54 106" stroke="var(--accent-gold)" stroke-width="0.8" />
+                <text x="40" y="102" fill="var(--accent-gold)" font-family="var(--font-heading)" font-size="9" font-weight="bold" text-anchor="middle">Sun</text>
+                
+                <!-- Solar Incident Ray (Sun to Heliostat) -->
+                <line x1="40" y1="120" x2="185" y2="135" stroke="var(--accent-gold)" stroke-width="1" stroke-dasharray="3,3" />
+                <path d="M95 126 L88 122 L89 129 Z" fill="var(--accent-gold)" />
+                <text x="75" y="118" fill="var(--accent-gold)" font-family="var(--font-mono)" font-size="7">Solar Ray</text>
+                
+                <!-- Reflected Message Ray (Heliostat to Satellite) -->
+                <line x1="185" y1="135" x2="251" y2="80" stroke="var(--accent-cyan)" stroke-width="1.5" />
+                <path d="M215 110 L208 115 L212 118 Z" fill="var(--accent-cyan)" />
+                <text x="210" y="112" fill="var(--accent-cyan)" font-family="var(--font-mono)" font-size="7" transform="rotate(-40, 210, 112)">Signal</text>
+                
+                <!-- Geometric angle marking at Heliostat -->
+                <path d="M170 134 A 15 15 0 0 1 174 125" stroke="var(--text-secondary, currentColor)" stroke-width="0.8" />
+                <text x="168" y="120" fill="var(--text-secondary, currentColor)" font-family="var(--font-heading)" font-size="8" font-style="italic">&theta;</text>
+              </svg>
+            </div>
+            <div class="paper-diagram-caption">
+              Fig I-1. Geometry of surface-to-orbit solar reflecting vectors.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: HISTORY OF HELIOGRAPHY (Green Blackboard) -->
+    <section class="section section-chalkboard" id="history">
+      <div class="container">
+        <div class="chalkboard-grid reveal">
+          <!-- Column 1: Historical Diagram -->
+          <div class="chalk-graphic-container">
+            <!-- Mance Heliograph Shutter Diagram -->
+            <svg class="chalk-svg" viewBox="0 0 250 250" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Tripod -->
+              <line x1="125" y1="120" x2="125" y2="210" stroke="hsl(45, 10%, 93%)" stroke-width="1" />
+              <line x1="125" y1="120" x2="80" y2="230" stroke="hsl(45, 10%, 93%)" stroke-width="1" />
+              <line x1="125" y1="120" x2="170" y2="230" stroke="hsl(45, 10%, 93%)" stroke-width="1" />
+              
+              <!-- Mirror assembly -->
+              <circle cx="125" cy="110" r="15" stroke="hsl(190, 85%, 55%)" stroke-width="1.2" />
+              <!-- Shutter / Key mechanism -->
+              <line x1="100" y1="110" x2="150" y2="110" stroke="hsl(45, 80%, 70%)" stroke-width="1.2" />
+              <circle cx="150" cy="110" r="2.5" fill="hsl(45, 10%, 93%)" />
+              <text x="156" y="113" fill="hsl(45, 10%, 93%)" font-family="var(--font-mono)" font-size="8">Key</text>
+              
+              <!-- Sun ray reflecting off mirror -->
+              <path d="M30 40 L115 102" stroke="hsl(45, 80%, 70%)" stroke-width="0.8" stroke-dasharray="2,2" />
+              <path d="M135 118 L210 160" stroke="hsl(190, 85%, 55%)" stroke-width="1" />
+              
+              <!-- Labels -->
+              <text x="35" y="32" fill="hsl(45, 80%, 70%)" font-family="var(--font-heading)" font-size="9" font-style="italic">Sun Light</text>
+              <text x="175" y="180" fill="hsl(190, 85%, 55%)" font-family="var(--font-heading)" font-size="9" font-style="italic">Reflected Flash</text>
+              <text x="94" y="85" fill="hsl(45, 10%, 93%)" font-family="var(--font-mono)" font-size="8">Mance Heliograph (1869)</text>
+              
+              <!-- Distance signaling formula -->
+              <text x="12" y="244" fill="hsl(145, 10%, 75%)" font-family="var(--font-mono)" font-size="8">d = Range (km) &prop; Mirror Diameter (m)</text>
+            </svg>
+          </div>
+
+          <!-- Column 2: Historical context -->
+          <div class="chalk-notes-container">
+            <h2 class="chalk-header" style="font-size: 2.25rem; margin-bottom: 1.5rem;">Heliography through Time</h2>
+            <p class="chalk-text" style="font-size: 1.15rem; line-height: 1.8;">
+              Heliography—signaling by flashing sunlight reflected from a mirror—has rich historical roots. Developed formally by Sir Henry Christopher Mance in 1869, the heliograph was widely adopted by military campaigns in the late 19th and early 20th centuries. Operating on Morse code, these systems allowed soldiers to communicate across vast desert vistas and mountain ranges, with flashing points visible up to 100 miles away.
+            </p>
+            <p class="chalk-text" style="font-size: 1.15rem; line-height: 1.8; margin-top: 1.5rem;">
+              Our project leaps from these terrestrial signaling networks into orbital altitudes. Rather than communicating across mountain ridges, we project precise solar flashes upwards into the path of LEO satellites, adapting this 19th-century solar technology for the space age.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: PHYSICS & METRICS (Midnight Starfield Canvas Background) -->
+    <section class="section section-starfield" id="physics">
+      <!-- Live orbital intercept simulation canvas background -->
+      <canvas id="starfield-canvas"></canvas>
+      
+      <div class="container" style="position: relative; z-index: 2;">
+        <div class="starfield-grid reveal">
+          <div class="starfield-text-box">
+            <h2 class="section-title" style="text-align: left;">Orbital Intercept Physics</h2>
+            <p class="section-subtitle" style="text-align: left; margin: 0 0 2rem 0; font-size: 1.15rem;">
+              Tracking celestial angles and satellite velocities.
+            </p>
+            
+            <div class="starfield-card" style="margin-bottom: 2rem;">
+              <h3>Thousandths-of-a-Second Tracking</h3>
+              <p style="font-size: 1rem; line-height: 1.7; opacity: 0.85;">
+                Satellites in Low Earth Orbit (LEO) travel at speeds exceeding 7.5 kilometers per second. To hit a satellite's optical receiver with a reflected beam of sunlight, we must compute orbital intercepts with sub-millisecond precision. Even a deviation of 0.001 seconds corresponds to a positional error of 7.5 meters—meaning the reflected beam will completely miss the target.
+              </p>
+            </div>
+            
+            <div class="starfield-card">
+              <h3>Atmospheric Refraction Correction</h3>
+              <p style="font-size: 1rem; line-height: 1.7; opacity: 0.85;">
+                We calculate real-time refraction parameters based on local meteorological readings. By compensating for atmospheric density variations, we steer our high-precision mirror mounts to correct coordinate errors.
+              </p>
+            </div>
+          </div>
+          
+          <div class="starfield-diagram-container">
+            <div class="paper-diagram-box" style="background: rgba(20, 25, 35, 0.8); backdrop-filter: var(--glass-backdrop);">
+              <!-- Spherical Trig Orbit Intercept Diagram -->
+              <svg viewBox="0 0 250 250" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Spherical Triangle -->
+                <!-- Arc Earth to Sun -->
+                <path d="M60 170 C 80 100, 110 65, 140 60" stroke="var(--accent-cyan)" stroke-width="1.2" />
+                <!-- Arc Sun to Sat -->
+                <path d="M140 60 C 160 90, 185 140, 175 180" stroke="var(--accent-cyan)" stroke-width="1.2" />
+                <!-- Arc Sat to Earth -->
+                <path d="M175 180 C 130 175, 90 170, 60 170" stroke="var(--accent-cyan)" stroke-width="1.2" stroke-dasharray="2,2" />
+                
+                <!-- Nodes -->
+                <circle cx="60" cy="170" r="3" fill="#fff" />
+                <text x="45" y="176" fill="#fff" font-family="var(--font-mono)" font-size="9" font-weight="bold">E (Earth)</text>
+                
+                <circle cx="140" cy="60" r="3" fill="#fff" />
+                <text x="135" y="48" fill="#fff" font-family="var(--font-mono)" font-size="9" font-weight="bold">S (Sun)</text>
+                
+                <circle cx="175" cy="180" r="3" fill="#fff" />
+                <text x="184" y="185" fill="#fff" font-family="var(--font-mono)" font-size="9" font-weight="bold">Sat (Orbit)</text>
+                
+                <!-- Arcs labeling -->
+                <text x="94" y="105" fill="var(--accent-gold)" font-family="var(--font-heading)" font-size="9" font-style="italic">Rs (Distance to Sun)</text>
+                <text x="168" y="115" fill="var(--accent-gold)" font-family="var(--font-heading)" font-size="9" font-style="italic">Ro (Orbit Alt)</text>
+                <text x="108" y="190" fill="var(--accent-gold)" font-family="var(--font-heading)" font-size="9" font-style="italic">Re (Earth Rad)</text>
+                
+                <!-- Spherical Law formula -->
+                <text x="24" y="235" fill="hsl(220, 15%, 75%)" font-family="var(--font-mono)" font-size="8">cos(Re) = cos(Rs)cos(Ro) + sin(Rs)sin(Ro)cos(&gamma;)</text>
+              </svg>
+            </div>
+            <div class="paper-diagram-caption" style="color: hsl(220, 15%, 75%);">
+              Fig III-1. Spherical trigonometry coordinates for tracking orbits.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: THE TEAM (White Journal paper Ledger) -->
+    <section class="section section-paper" id="team">
+      <div class="container">
+        <div class="text-center">
+          <h2 class="section-title reveal">The Research Team</h2>
+          <p class="section-subtitle reveal">
+            Collaborating scientists and optical engineers pioneering the orbital heliography program.
+          </p>
+        </div>
+
+        <div class="reveal" style="overflow-x: auto;">
+          <!-- Sci-fi Foundation placeholder names team ledger table -->
+          <table class="team-table">
+            <thead>
+              <tr>
+                <th>Researcher Name</th>
+                <th>Role in Project</th>
+                <th>Focus &amp; Specialization</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Dr. Hari Seldon</strong></td>
+                <td class="role-cell">Principal Orbit Dynamicist</td>
+                <td class="specialty-cell">Predictive modeling of satellite orbital windows using high-order spherical harmonics.</td>
+              </tr>
+              <tr>
+                <td><strong>Dr. Gaal Dornick</strong></td>
+                <td class="role-cell">Chief Optical Systems Architect</td>
+                <td class="specialty-cell">Design of reflective heliostat coatings and high-speed mirror shutter alignment arrays.</td>
+              </tr>
+              <tr>
+                <td><strong>Coordinator Salvor Hardin</strong></td>
+                <td class="role-cell">Field Synchronization Lead</td>
+                <td class="specialty-cell">Management of atmospheric telemetry and ground-to-orbit messaging transmission.</td>
+              </tr>
+              <tr>
+                <td><strong>Engineer Hober Mallow</strong></td>
+                <td class="role-cell">Solar Tracker Hardware Specialist</td>
+                <td class="specialty-cell">Development of sub-millisecond stepper motors and celestial solar-tracking sensors.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: CALENDAR OF ATTEMPTS (Green Chalkboard Calendar) -->
+    <section class="section section-chalkboard" id="calendar">
+      <div class="container">
+        <div class="text-center">
+          <h2 class="section-title reveal">Signal Attempts Log</h2>
+          <p class="section-subtitle reveal">
+            A chronological timeline of mirror targeting missions and orbital reflection sync runs.
+          </p>
+        </div>
+
+        <div class="calendar-grid reveal">
+          <!-- Attempt 1 -->
+          <div class="calendar-card completed">
+            <div class="calendar-date">12 March 2026 // LEO-SYNC-01</div>
+            <h3 class="chalk-header">Helios-Target Alpha</h3>
+            <p class="calendar-desc">
+              Initial targeting window test targeting LEO reflector array. Tracking window: 12 seconds. Result: Target missed due to 0.004s step-motor tracking delay. Coordinate deviations mapped.
+            </p>
+          </div>
+
+          <!-- Attempt 2 -->
+          <div class="calendar-card completed">
+            <div class="calendar-date">28 April 2026 // LEO-SYNC-02</div>
+            <h3 class="chalk-header">LEO Reflect-Sync</h3>
+            <p class="calendar-desc">
+              Refined step-motor calibration. Tracking window: 18 seconds. Result: Partial reflection feedback confirmed by orbital optical sensor. Calibration delta within 0.0015s.
+            </p>
+          </div>
+
+          <!-- Attempt 3 -->
+          <div class="calendar-card completed">
+            <div class="calendar-date">18 May 2026 // EQ-MERIDIAN-01</div>
+            <h3 class="chalk-header">Equatorial Meridian Test</h3>
+            <p class="calendar-desc">
+              Targeting satellite transit along the local meridian. Tracking window: 25 seconds. Result: Successful locking of mirror reflection beacon. Complete Morse packet sent.
+            </p>
+          </div>
+
+          <!-- Attempt 4 -->
+          <div class="calendar-card">
+            <div class="calendar-date">04 June 2026 // SCHEDULED MISSION</div>
+            <h3 class="chalk-header">Helios-Sync Beta</h3>
+            <p class="calendar-desc">
+              Next scheduled transit sync. Objective: Establish continuous reflection link for 40 seconds to verify high-bandwidth signal modulation. Calibration targets set.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <button class="scroll-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Scroll to top" id="end_top">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+      </button>
+      <div class="footer-nav">
+        <a href="#introduction">Introduction</a>
+        <a href="#history">History</a>
+        <a href="#physics">Physics</a>
+        <a href="#team">The Team</a>
+        <a href="#calendar">Calendar</a>
+      </div>
+      <p class="footer-credits">
+        &copy; 2026 The Orbital Heliography Project. Designed for advanced coordinate projection &amp; optical messaging.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+</body>
+</html>
