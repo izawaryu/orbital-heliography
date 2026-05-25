@@ -216,6 +216,23 @@ document.addEventListener('DOMContentLoaded', () => {
   // Example: 'https://script.google.com/macros/s/AKfycbz.../exec'
   const GOOGLE_SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbzouUIcbiDGuwZCEw5D1VScn3nZxcdYHjYd78zvpcziCqYfUsxkqsc3YmX-a4ugqkLi1A/exec';
 
+  // --- HELPERS ---
+  const formatDate = (dateStr) => {
+    if (!dateStr) return '';
+    if (typeof dateStr === 'string' && !dateStr.includes('-') && !dateStr.includes(':')) {
+      return dateStr;
+    }
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr;
+    
+    if (d.getFullYear() === 1899 && d.getMonth() === 11 && d.getDate() === 30) {
+      return d.toTimeString().split(' ')[0];
+    }
+    
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  };
+
   // --- LOAD LOG ENTRIES FROM GOOGLE SHEETS ---
   const loadLogs = async () => {
     const calendarGrid = document.querySelector('.calendar-grid');
@@ -231,15 +248,20 @@ document.addEventListener('DOMContentLoaded', () => {
         calendarGrid.innerHTML = '';
         
         data.forEach(item => {
-          const isCompleted = item.status === 'completed' || item.status === 'recorded' || item.status === 'completed (recorded)';
+          const statusLower = (item.status || '').toLowerCase();
+          const isCompleted = statusLower === 'completed' || statusLower === 'recorded' || statusLower === 'completed (recorded)' || statusLower === 'successful';
           const cardClass = isCompleted ? 'calendar-card completed' : 'calendar-card';
+          
+          const formattedDate = formatDate(item.date);
+          const formattedDesc = formatDate(item.description);
+          const descLabel = (formattedDesc && formattedDesc.includes(':')) ? `Pass Time: ${formattedDesc}` : formattedDesc;
           
           const card = document.createElement('div');
           card.className = cardClass;
           card.innerHTML = `
-            <div class="calendar-date">${item.date}</div>
+            <div class="calendar-date">${formattedDate}</div>
             <h3 class="chalk-header">${item.title}</h3>
-            <p class="calendar-desc">${item.description}</p>
+            <p class="calendar-desc">${descLabel}</p>
           `;
           calendarGrid.appendChild(card);
         });
