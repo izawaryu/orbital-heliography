@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- GOOGLE SHEETS CONFIGURATION ---
   // Replace with your deployed Google Apps Script Web App URL.
   // Example: 'https://script.google.com/macros/s/AKfycbz.../exec'
-  const GOOGLE_SHEETS_API_URL = '';
+  const GOOGLE_SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbzouUIcbiDGuwZCEw5D1VScn3nZxcdYHjYd78zvpcziCqYfUsxkqsc3YmX-a4ugqkLi1A/exec';
 
   // --- LOAD LOG ENTRIES FROM GOOGLE SHEETS ---
   const loadLogs = async () => {
