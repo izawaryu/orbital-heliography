@@ -210,4 +210,133 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeCanvas();
     animate();
   }
+
+  // --- GOOGLE SHEETS CONFIGURATION ---
+  // Replace with your deployed Google Apps Script Web App URL.
+  // Example: 'https://script.google.com/macros/s/AKfycbz.../exec'
+  const GOOGLE_SHEETS_API_URL = '';
+
+  // --- LOAD LOG ENTRIES FROM GOOGLE SHEETS ---
+  const loadLogs = async () => {
+    const calendarGrid = document.querySelector('.calendar-grid');
+    if (!calendarGrid || !GOOGLE_SHEETS_API_URL) return;
+
+    try {
+      const response = await fetch(GOOGLE_SHEETS_API_URL);
+      if (!response.ok) throw new Error('Network response was not ok');
+      const data = await response.json();
+      
+      if (data && data.length > 0) {
+        // Clear hardcoded elements
+        calendarGrid.innerHTML = '';
+        
+        data.forEach(item => {
+          const isCompleted = item.status === 'completed' || item.status === 'recorded' || item.status === 'completed (recorded)';
+          const cardClass = isCompleted ? 'calendar-card completed' : 'calendar-card';
+          
+          const card = document.createElement('div');
+          card.className = cardClass;
+          card.innerHTML = `
+            <div class="calendar-date">${item.date}</div>
+            <h3 class="chalk-header">${item.title}</h3>
+            <p class="calendar-desc">${item.description}</p>
+          `;
+          calendarGrid.appendChild(card);
+        });
+      }
+    } catch (error) {
+      console.warn('Failed to load logs from Google Sheets, using static HTML fallback:', error);
+    }
+  };
+
+  // --- FORM VISIBILITY TOGGLE ---
+  const openFormBtn = document.getElementById('open-log-form-btn');
+  const closeFormBtn = document.getElementById('close-log-form-btn');
+  const formContainer = document.getElementById('log-form-container');
+
+  if (openFormBtn && formContainer) {
+    openFormBtn.addEventListener('click', () => {
+      formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
+      if (formContainer.style.display === 'block') {
+        formContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  }
+
+  if (closeFormBtn && formContainer) {
+    closeFormBtn.addEventListener('click', () => {
+      formContainer.style.display = 'none';
+    });
+  }
+
+  // --- SUBMIT NEW LOG ENTRY TO GOOGLE SHEETS ---
+  const logForm = document.getElementById('new-log-form');
+  const formFeedback = document.getElementById('form-feedback');
+
+  if (logForm) {
+    logForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!GOOGLE_SHEETS_API_URL) {
+        if (formFeedback) {
+          formFeedback.style.color = 'var(--accent-gold)';
+          formFeedback.textContent = 'Sheets API URL not configured in js/main.js';
+        }
+        return;
+      }
+
+      const dateVal = document.getElementById('log-date').value;
+      const titleVal = document.getElementById('log-title').value;
+      const statusVal = document.getElementById('log-status').value;
+      const descVal = document.getElementById('log-desc').value;
+
+      if (formFeedback) {
+        formFeedback.style.color = '#fff';
+        formFeedback.textContent = 'Transmitting telemetry to Google Sheets...';
+      }
+
+      try {
+        const payload = {
+          date: dateVal,
+          title: titleVal,
+          description: descVal,
+          status: statusVal
+        };
+
+        const response = await fetch(GOOGLE_SHEETS_API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8' // avoids preflight CORS checks!
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const resData = await response.json();
+        
+        if (resData.status === 'success') {
+          if (formFeedback) {
+            formFeedback.style.color = 'var(--accent-cyan)';
+            formFeedback.textContent = 'Telemetry recorded successfully!';
+          }
+          logForm.reset();
+          setTimeout(() => {
+            loadLogs();
+            if (formContainer) formContainer.style.display = 'none';
+            if (formFeedback) formFeedback.textContent = '';
+          }, 1500);
+        } else {
+          throw new Error(resData.message || 'Unknown server error');
+        }
+
+      } catch (error) {
+        console.error('Failed to submit log entry:', error);
+        if (formFeedback) {
+          formFeedback.style.color = '#ff6b6b';
+          formFeedback.textContent = `Transmission failed: ${error.message}`;
+        }
+      }
+    });
+  }
+
+  // Run initialization load
+  loadLogs();
 });

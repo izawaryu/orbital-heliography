@@ -437,6 +437,10 @@
           <h2 class="section-title reveal">Signal Attempts Log</h2>
           <p class="section-subtitle reveal">
             A chronological timeline of mirror targeting missions and orbital reflection sync runs.
+            <br>
+            <a href="https://docs.google.com/spreadsheets/d/1iuroE9vS6bvfAUALEXsHus-KP6qL3TNJIXiw_4ShMdM" target="_blank" rel="noopener" class="chalk-link" style="margin-top: 0.5rem; display: inline-block; font-size: 0.9rem; font-family: var(--font-mono); color: var(--accent-cyan); text-decoration: underline; text-shadow: 0 0 2px rgba(0, 240, 240, 0.3);">
+              View Source Spreadsheet
+            </a>
           </p>
         </div>
 
@@ -477,6 +481,44 @@
             </p>
           </div>
         </div>
+
+        <div class="text-center reveal" style="margin-top: 3.5rem;">
+          <button id="open-log-form-btn" class="chalk-btn" style="background: transparent; border: 1px dashed var(--accent-cyan); color: var(--accent-cyan); padding: 0.75rem 2rem; font-family: var(--font-heading); font-style: italic; font-size: 1.1rem; cursor: pointer; transition: var(--transition-smooth); text-shadow: 0 0 2px rgba(0, 240, 240, 0.3);">
+            + Write New Mission Log Entry
+          </button>
+        </div>
+
+        <!-- Slide-down Chalkboard Form -->
+        <div id="log-form-container" class="log-form-container reveal" style="display: none; max-width: 600px; margin: 2.5rem auto 0 auto; border: 1px dashed var(--border-color); padding: 2rem; background: rgba(255, 255, 255, 0.02);">
+          <h3 class="chalk-header" style="margin-bottom: 1.5rem; text-align: center;">Record New Reflection Mission</h3>
+          <form id="new-log-form">
+            <div class="chalk-form-group">
+              <label for="log-date">Mission Date &amp; ID</label>
+              <input type="text" id="log-date" placeholder="e.g. 04 June 2026 // LEO-SYNC-03" required>
+            </div>
+            <div class="chalk-form-group">
+              <label for="log-title">Mission Target / Title</label>
+              <input type="text" id="log-title" placeholder="e.g. Helios-Sync Beta" required>
+            </div>
+            <div class="chalk-form-group">
+              <label for="log-status">Mission Status</label>
+              <select id="log-status">
+                <option value="scheduled">SCHEDULED</option>
+                <option value="completed">RECORDED (COMPLETED)</option>
+              </select>
+            </div>
+            <div class="chalk-form-group">
+              <label for="log-desc">Mission Description &amp; Metrics</label>
+              <textarea id="log-desc" rows="4" placeholder="Detail tracking duration, motor calibration deltas, and reflection results..." required></textarea>
+            </div>
+            <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
+              <button type="button" id="close-log-form-btn" class="chalk-btn-secondary" style="background: transparent; border: 1px dashed var(--border-color); color: hsl(45, 10%, 80%); padding: 0.5rem 1.5rem; cursor: pointer; font-family: var(--font-body); font-style: italic;">Cancel</button>
+              <button type="submit" class="chalk-btn" style="background: transparent; border: 1px dashed var(--accent-cyan); color: var(--accent-cyan); padding: 0.5rem 1.5rem; cursor: pointer; font-family: var(--font-heading); font-style: italic; font-weight: bold; text-shadow: 0 0 2px rgba(0, 240, 240, 0.3);">Commit to Log</button>
+            </div>
+          </form>
+          <div id="form-feedback" style="margin-top: 1rem; text-align: center; font-family: var(--font-mono); font-size: 0.85rem;"></div>
+        </div>
+
       </div>
     </section>
 
