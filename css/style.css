@@ -178,16 +178,19 @@ img {
 }
 
 .paper-diagram-box::after {
-  content: 'PLATE I';
+  content: var(--plate-text, 'PLATE I');
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: var(--plate-top, 1rem);
+  right: var(--plate-right, 1rem);
+  bottom: var(--plate-bottom, auto);
+  left: var(--plate-left, auto);
   font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--accent-cyan);
   border: 1px solid var(--border-color);
   padding: 0.15rem 0.35rem;
-  background: #fff;
+  background: var(--plate-bg, #fff);
+  z-index: 10;
 }
 
 .paper-diagram-box svg {
@@ -522,14 +525,15 @@ header.navbar-container.scrolled .nav-wrap {
   color: hsl(210, 15%, 35%);
 }
 
-.team-table td.role-cell {
+.team-role {
   font-family: var(--font-heading);
   font-style: italic;
   font-weight: 500;
   color: var(--accent-cyan);
+  margin-bottom: 0.25rem;
 }
 
-.team-table td.specialty-cell {
+.team-specialty {
   color: hsl(210, 15%, 35%);
   font-size: 0.95rem;
 }

@@ -76,7 +76,7 @@
           </div>
           
           <div class="paper-diagram-container">
-            <div class="paper-diagram-box">
+            <div class="paper-diagram-box" style="--plate-text: 'PLATE I';">
               <!-- Technical SVG Drawing: Celestial Heliography coordinate calculations -->
               <svg viewBox="0 0 320 320" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" class="blueprint-svg">
                 <!-- Earth Polar Axis (Perfecty Vertical) -->
@@ -208,7 +208,7 @@
           </div>
           
           <div class="starfield-diagram-container">
-            <div class="paper-diagram-box" style="background: rgba(20, 25, 35, 0.8); backdrop-filter: var(--glass-backdrop);">
+            <div class="paper-diagram-box" style="background: rgba(20, 25, 35, 0.8); backdrop-filter: var(--glass-backdrop); --plate-text: 'PLATE II'; --plate-top: 1rem; --plate-left: 1rem; --plate-right: auto; --plate-bg: rgba(20, 25, 35, 0.95); --border-color: rgba(255, 255, 255, 0.15);">
               <!-- Spherical Trig Orbit Intercept Diagram -->
               <svg viewBox="0 0 500 400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="width: 100%; height: auto;">
                 <defs>
@@ -343,7 +343,7 @@
             </div>
             
             <!-- Technical field photo of precision tracking mirror array at observatory -->
-            <div class="paper-diagram-box" style="margin-top: 2.5rem; background: rgba(20, 25, 35, 0.8); backdrop-filter: var(--glass-backdrop); border-color: var(--border-color); padding: 1rem;">
+            <div class="paper-diagram-box" style="margin-top: 2.5rem; background: rgba(20, 25, 35, 0.8); backdrop-filter: var(--glass-backdrop); border-color: var(--border-color); padding: 1rem; --plate-text: 'PLATE III'; --plate-top: auto; --plate-bottom: 1.5rem; --plate-right: 1.5rem; --plate-bg: rgba(20, 25, 35, 0.95); --border-color: rgba(255, 255, 255, 0.15);">
               <img src="img/physics_field_test.jpg" alt="Field test of mirror heliostat array at observatory" style="width: 100%; height: auto; display: block; border: 1px solid rgba(255, 255, 255, 0.15);">
             </div>
             <div class="paper-diagram-caption" style="color: hsl(220, 15%, 75%);">
@@ -369,46 +369,59 @@
           <table class="team-table">
             <thead>
               <tr>
-                <th>Researcher Name</th>
-                <th>Role in Project</th>
-                <th>Focus &amp; Specialization</th>
+                <th style="width: 30%;">Researcher Name</th>
+                <th style="width: 70%;">Role &amp; Focus</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td><strong>Ryu Izawa</strong></td>
-                <td class="role-cell">Principal Orbital Dynamicist, Heliographer</td>
-                <td class="specialty-cell">Calculating sub-millisecond orbital intercept trajectories and managing precision ground-to-space heliostat targeting arrays.</td>
+                <td>
+                  <div class="team-role">Principal Orbital Dynamicist, Heliographer</div>
+                  <div class="team-specialty">Trajectory calculations &amp; precision targeting arrays.</div>
+                </td>
               </tr>
               <tr>
                 <td><strong>Anthony Goddard</strong></td>
-                <td class="role-cell">Principal Cartographer, Heliographer</td>
-                <td class="specialty-cell">High-accuracy topographic mapping of reflection points, geodesy coordinates, and alignment of solar vectors.</td>
+                <td>
+                  <div class="team-role">Principal Cartographer, Heliographer</div>
+                  <div class="team-specialty">Topographic mapping &amp; solar vector alignment.</div>
+                </td>
               </tr>
               <tr>
                 <td><strong>Aamuro Kanda</strong></td>
-                <td class="role-cell">Documentarian, Director</td>
-                <td class="specialty-cell">Directing multi-camera cinematic capture of high-altitude expeditions and translating telemetry data into narrative form.</td>
+                <td>
+                  <div class="team-role">Documentarian, Director</div>
+                  <div class="team-specialty">Expedition cinematography &amp; narrative telemetry records.</div>
+                </td>
               </tr>
               <tr>
                 <td><strong>Reese Glick</strong></td>
-                <td class="role-cell">Documentarian, Producer</td>
-                <td class="specialty-cell">Production logistics for remote astronomical testing sites and coordination of project media archives.</td>
+                <td>
+                  <div class="team-role">Documentarian, Producer</div>
+                  <div class="team-specialty">Remote site logistics &amp; media archive coordination.</div>
+                </td>
               </tr>
               <tr>
                 <td><strong>Alex Buysse</strong></td>
-                <td class="role-cell">Director of Photography, Expeditionary</td>
-                <td class="specialty-cell">Visual capture under extreme astronomical lighting environments and operation of high-contrast telephoto optical rigs.</td>
+                <td>
+                  <div class="team-role">Director of Photography, Expeditionary</div>
+                  <div class="team-specialty">High-contrast optical capture &amp; astronomical lighting.</div>
+                </td>
               </tr>
               <tr>
                 <td><strong>Thomas Sullivan</strong></td>
-                <td class="role-cell">Sound Unit Director, Expeditionary</td>
-                <td class="specialty-cell">Capturing atmospheric acoustic data and spatial field recordings of high-altitude telemetry gear operations.</td>
+                <td>
+                  <div class="team-role">Sound Unit Director, Expeditionary</div>
+                  <div class="team-specialty">Acoustic telemetry &amp; spatial field recordings.</div>
+                </td>
               </tr>
               <tr>
                 <td><strong>Luke Cahill</strong></td>
-                <td class="role-cell">Camera Operator, Sound, Heliographer</td>
-                <td class="specialty-cell">Operating remote camera units and configuring field mirrors for active surface-to-orbit signaling attempts.</td>
+                <td>
+                  <div class="team-role">Camera Operator, Sound, Heliographer</div>
+                  <div class="team-specialty">Field mirror configuration &amp; camera operations.</div>
+                </td>
               </tr>
             </tbody>
           </table>
