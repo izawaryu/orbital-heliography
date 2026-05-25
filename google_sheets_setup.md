@@ -39,12 +39,10 @@ function doGet(e) {
     }
     
     return ContentService.createTextOutput(JSON.stringify(rows))
-      .setMimeType(ContentService.MimeType.JSON)
-      .setHeader('Access-Control-Allow-Origin', '*');
+      .setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
     return ContentService.createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON)
-      .setHeader('Access-Control-Allow-Origin', '*');
+      .setMimeType(ContentService.MimeType.JSON);
   }
 }
 
@@ -81,12 +79,10 @@ function doPost(e) {
     sheet.appendRow([date, title, description, status || 'scheduled']);
     
     return ContentService.createTextOutput(JSON.stringify({ status: 'success' }))
-      .setMimeType(ContentService.MimeType.JSON)
-      .setHeader('Access-Control-Allow-Origin', '*');
+      .setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
     return ContentService.createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON)
-      .setHeader('Access-Control-Allow-Origin', '*');
+      .setMimeType(ContentService.MimeType.JSON);
   }
 }
 ```
