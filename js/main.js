@@ -233,10 +233,69 @@ document.addEventListener('DOMContentLoaded', () => {
     return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
   };
 
+  // --- FALLBACK LOGS ---
+  const fallbackLogs = [
+    {
+      date: "12 March 2026 // LEO-SYNC-01",
+      title: "Helios-Target Alpha",
+      description: "Initial targeting window test targeting LEO reflector array. Tracking window: 12 seconds. Result: Target missed due to 0.004s step-motor tracking delay. Coordinate deviations mapped.",
+      status: "completed"
+    },
+    {
+      date: "28 April 2026 // LEO-SYNC-02",
+      title: "LEO Reflect-Sync",
+      description: "Refined step-motor calibration. Tracking window: 18 seconds. Result: Partial reflection feedback confirmed by orbital optical sensor. Calibration delta within 0.0015s.",
+      status: "completed"
+    },
+    {
+      date: "18 May 2026 // EQ-MERIDIAN-01",
+      title: "Equatorial Meridian Test",
+      description: "Targeting satellite transit along the local meridian. Tracking window: 25 seconds. Result: Successful locking of mirror reflection beacon. Complete Morse packet sent.",
+      status: "completed"
+    },
+    {
+      date: "04 June 2026 // SCHEDULED MISSION",
+      title: "Helios-Sync Beta",
+      description: "Next scheduled transit sync. Objective: Establish continuous reflection link for 40 seconds to verify high-bandwidth signal modulation. Calibration targets set.",
+      status: "scheduled"
+    }
+  ];
+
+  // --- RENDER LOGS TO THE TIMELINE ---
+  const renderLogs = (logs) => {
+    const calendarGrid = document.querySelector('.calendar-grid');
+    if (!calendarGrid) return;
+    
+    calendarGrid.innerHTML = '';
+    logs.forEach(item => {
+      const statusLower = (item.status || '').toLowerCase();
+      const isCompleted = statusLower === 'completed' || statusLower === 'recorded' || statusLower === 'completed (recorded)' || statusLower === 'successful';
+      const cardClass = isCompleted ? 'calendar-card completed' : 'calendar-card';
+      
+      const formattedDate = formatDate(item.date);
+      const formattedDesc = formatDate(item.description);
+      const descLabel = (formattedDesc && formattedDesc.includes(':')) ? `Pass Time: ${formattedDesc}` : formattedDesc;
+      
+      const card = document.createElement('div');
+      card.className = cardClass;
+      card.innerHTML = `
+        <div class="calendar-date">${formattedDate}</div>
+        <h3 class="chalk-header">${item.title}</h3>
+        <p class="calendar-desc">${descLabel}</p>
+      `;
+      calendarGrid.appendChild(card);
+    });
+  };
+
   // --- LOAD LOG ENTRIES FROM GOOGLE SHEETS ---
   const loadLogs = async () => {
     const calendarGrid = document.querySelector('.calendar-grid');
-    if (!calendarGrid || !GOOGLE_SHEETS_API_URL) return;
+    if (!calendarGrid) return;
+
+    if (!GOOGLE_SHEETS_API_URL) {
+      renderLogs(fallbackLogs);
+      return;
+    }
 
     try {
       const response = await fetch(GOOGLE_SHEETS_API_URL);
@@ -244,30 +303,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await response.json();
       
       if (data && data.length > 0) {
-        // Clear hardcoded elements
-        calendarGrid.innerHTML = '';
-        
-        data.forEach(item => {
-          const statusLower = (item.status || '').toLowerCase();
-          const isCompleted = statusLower === 'completed' || statusLower === 'recorded' || statusLower === 'completed (recorded)' || statusLower === 'successful';
-          const cardClass = isCompleted ? 'calendar-card completed' : 'calendar-card';
-          
-          const formattedDate = formatDate(item.date);
-          const formattedDesc = formatDate(item.description);
-          const descLabel = (formattedDesc && formattedDesc.includes(':')) ? `Pass Time: ${formattedDesc}` : formattedDesc;
-          
-          const card = document.createElement('div');
-          card.className = cardClass;
-          card.innerHTML = `
-            <div class="calendar-date">${formattedDate}</div>
-            <h3 class="chalk-header">${item.title}</h3>
-            <p class="calendar-desc">${descLabel}</p>
-          `;
-          calendarGrid.appendChild(card);
-        });
+        renderLogs(data);
+      } else {
+        renderLogs(fallbackLogs);
       }
     } catch (error) {
       console.warn('Failed to load logs from Google Sheets, using static HTML fallback:', error);
+      renderLogs(fallbackLogs);
     }
   };
 
