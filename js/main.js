@@ -254,6 +254,12 @@ document.addEventListener('DOMContentLoaded', () => {
       status: "completed"
     },
     {
+      date: "2026-05-31 // L2A",
+      title: "Sighted",
+      description: "https://browser.dataspace.copernicus.eu/?zoom=17&lat=40.25151&lng=-74.06968&themeId=DEFAULT-THEME&visualizationUrl=U2FsdGVkX18t2dlrNxUtsOodchY8SmNUlh9UxN6T32Mv19zHvF1ySXM8SDoevFkU4UduxQeekt5anyPSRwYl0C6qtQEV7m9o%2BBzIZAzMoqIwh%2BJ0LKaw38WU%2BHEPdC%2Bk&datasetId=S2_L2A_CDAS&fromTime=2026-05-31T00%3A00%3A00.000Z&toTime=2026-05-31T23%3A59%3A59.999Z&layerId=1_TRUE_COLOR&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=single",
+      status: "completed"
+    },
+    {
       date: "04 June 2026 // SCHEDULED MISSION",
       title: "Helios-Sync Beta",
       description: "Next scheduled transit sync. Objective: Establish continuous reflection link for 40 seconds to verify high-bandwidth signal modulation. Calibration targets set.",
@@ -274,14 +280,36 @@ document.addEventListener('DOMContentLoaded', () => {
       
       const formattedDate = formatDate(item.date);
       const formattedDesc = formatDate(item.description);
-      const descLabel = (formattedDesc && formattedDesc.includes(':')) ? `Pass Time: ${formattedDesc}` : formattedDesc;
+      
+      let descHTML = '';
+      if (formattedDesc) {
+        if (formattedDesc.startsWith('http://') || formattedDesc.startsWith('https://')) {
+          descHTML = `<a href="${formattedDesc}" target="_blank" class="calendar-link" style="color: var(--accent-cyan); text-decoration: underline; word-break: break-all;">View Copernicus Browser Sighting</a>`;
+        } else if (formattedDesc.includes(':') && !formattedDesc.includes('http')) {
+          descHTML = `Pass Time: ${formattedDesc}`;
+        } else {
+          descHTML = formattedDesc;
+        }
+      }
+
+      let imageHTML = '';
+      if (item.date && item.date.includes('2026-05-31')) {
+        imageHTML = `
+          <div class="calendar-image" style="margin-top: 1.25rem;">
+            <a href="img/sentinel2_tci_web.jpg" target="_blank" title="Click to view full image">
+              <img src="img/sentinel2_tci_web.jpg" alt="Sentinel-2A TCI Web (May 31, 2026)" style="width: 100%; border-radius: 4px; border: 1px dashed rgba(255,255,255,0.25); filter: brightness(0.95); transition: all 0.3s;" onmouseover="this.style.filter='brightness(1.1)'; this.style.borderColor='var(--accent-cyan)';" onmouseout="this.style.filter='brightness(0.95)'; this.style.borderColor='rgba(255,255,255,0.25)';">
+            </a>
+          </div>
+        `;
+      }
       
       const card = document.createElement('div');
       card.className = cardClass;
       card.innerHTML = `
         <div class="calendar-date">${formattedDate}</div>
         <h3 class="chalk-header">${item.title}</h3>
-        <p class="calendar-desc">${descLabel}</p>
+        <p class="calendar-desc">${descHTML}</p>
+        ${imageHTML}
       `;
       calendarGrid.appendChild(card);
     });
