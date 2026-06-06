@@ -381,7 +381,24 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!calendarGrid) return;
     
     calendarGrid.innerHTML = '';
-    logs.forEach(item => {
+    
+    // Sort logs chronologically by parsing the date part
+    const sortedLogs = [...logs].sort((a, b) => {
+      const parseDate = (dateStr) => {
+        if (!dateStr) return 0;
+        const match = dateStr.match(/(\d{4}-\d{2}-\d{2})/);
+        if (match) {
+          return new Date(match[1]).getTime();
+        }
+        // Fallback for dates like "12 March 2026 // LEO-SYNC-01"
+        const cleanDateStr = dateStr.split(' // ')[0];
+        const d = new Date(cleanDateStr);
+        return isNaN(d.getTime()) ? 0 : d.getTime();
+      };
+      return parseDate(a.date) - parseDate(b.date);
+    });
+
+    sortedLogs.forEach(item => {
       const statusLower = (item.status || '').toLowerCase();
       const isCompleted = statusLower === 'completed' || statusLower === 'recorded' || statusLower === 'completed (recorded)' || statusLower === 'successful';
       const cardClass = isCompleted ? 'calendar-card completed' : 'calendar-card';
