@@ -309,9 +309,9 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
       } else if (item.date && item.date.includes('2026-06-05')) {
         imageHTML = `
-          <div class="calendar-image" style="margin-top: 1.25rem;">
+          <div class="calendar-image" style="margin-top: 1.25rem; text-align: center;">
             <a href="img/sentinel2c_anomaly_june5.jpg" target="_blank" title="Click to view full image">
-              <img src="img/sentinel2c_anomaly_june5.jpg" alt="Sentinel-2C Specular Anomaly (June 5, 2026)" style="width: 100%; border-radius: 4px; border: 1px dashed rgba(255,255,255,0.25); filter: brightness(0.95); transition: all 0.3s;" onmouseover="this.style.filter='brightness(1.1)'; this.style.borderColor='var(--accent-cyan)';" onmouseout="this.style.filter='brightness(0.95)'; this.style.borderColor='rgba(255,255,255,0.25)';">
+              <img src="img/sentinel2c_anomaly_june5.jpg" alt="Sentinel-2C Specular Anomaly (June 5, 2026)" style="width: 120px; height: 120px; object-fit: cover; border-radius: 4px; border: 1px dashed rgba(255,255,255,0.25); filter: brightness(0.95); transition: all 0.3s; display: inline-block;" onmouseover="this.style.filter='brightness(1.1)'; this.style.borderColor='var(--accent-cyan)';" onmouseout="this.style.filter='brightness(0.95)'; this.style.borderColor='rgba(255,255,255,0.25)';">
             </a>
           </div>
         `;
