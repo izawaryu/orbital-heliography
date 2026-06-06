@@ -76,10 +76,31 @@ function doPost(e) {
       throw new Error("Missing required fields: date, title, description");
     }
     
-    sheet.appendRow([date, title, description, status || 'scheduled']);
+    // Search for an existing row with the same date
+    var data = sheet.getDataRange().getValues();
+    var foundRowIndex = -1;
+    for (var i = 1; i < data.length; i++) {
+      var sheetDateStr = data[i][0].toString();
+      // Match exact string, or substring prefix (e.g. 2024-04-10 in 2024-04-10T04:00:00.000Z)
+      if (sheetDateStr === date || sheetDateStr.indexOf(date) === 0 || date.indexOf(sheetDateStr) === 0) {
+        foundRowIndex = i + 1; // 1-based index
+        break;
+      }
+    }
     
-    return ContentService.createTextOutput(JSON.stringify({ status: 'success' }))
-      .setMimeType(ContentService.MimeType.JSON);
+    if (foundRowIndex !== -1) {
+      // Update existing row (Title, Description, Status)
+      sheet.getRange(foundRowIndex, 2).setValue(title);
+      sheet.getRange(foundRowIndex, 3).setValue(description);
+      sheet.getRange(foundRowIndex, 4).setValue(status || 'completed');
+      return ContentService.createTextOutput(JSON.stringify({ status: 'success', action: 'updated', row: foundRowIndex }))
+        .setMimeType(ContentService.MimeType.JSON);
+    } else {
+      // Append new row
+      sheet.appendRow([date, title, description, status || 'scheduled']);
+      return ContentService.createTextOutput(JSON.stringify({ status: 'success', action: 'appended' }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
   } catch (err) {
     return ContentService.createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))
       .setMimeType(ContentService.MimeType.JSON);

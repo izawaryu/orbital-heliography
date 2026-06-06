@@ -242,6 +242,102 @@ document.addEventListener('DOMContentLoaded', () => {
       status: "completed"
     },
     {
+      date: "2024-04-10 // Sighting",
+      title: "Historical Sighting (Sentinel-2B)",
+      description: "Specular reflection anomaly detected in Sentinel-2B Level-2A imagery at coordinate (7915, 4384) near Wayside Elementary School. High-intensity specular flash captured during the orbital transit.",
+      status: "completed"
+    },
+    {
+      date: "2024-04-17 // Sighting",
+      title: "Historical Sighting (Sentinel-2A)",
+      description: "Specular reflection anomaly detected in Sentinel-2A Level-2A imagery at coordinate (7915, 4384) near Wayside Elementary School. High-intensity specular flash captured during the orbital transit.",
+      status: "completed"
+    },
+    {
+      date: "2024-05-01 // Sighting",
+      title: "Historical Sighting (Sentinel-2B)",
+      description: "Specular reflection anomaly detected in Sentinel-2B Level-2A imagery at coordinate (7915, 4384) near Wayside Elementary School. High-intensity specular flash captured during the orbital transit.",
+      status: "completed"
+    },
+    {
+      date: "2024-05-31 // Sighting",
+      title: "Historical Sighting (Sentinel-2B)",
+      description: "Specular reflection anomaly detected in Sentinel-2B Level-2A imagery at coordinate (7915, 4384) near Wayside Elementary School. High-intensity specular flash captured during the orbital transit.",
+      status: "completed"
+    },
+    {
+      date: "2024-06-13 // Sighting",
+      title: "Historical Sighting (Sentinel-2B)",
+      description: "Specular reflection anomaly detected in Sentinel-2B Level-2A imagery at coordinate (7915, 4384) near Wayside Elementary School. High-intensity specular flash captured during the orbital transit.",
+      status: "completed"
+    },
+    {
+      date: "2024-06-18 // Sighting",
+      title: "Historical Sighting (Sentinel-2A)",
+      description: "Specular reflection anomaly detected in Sentinel-2A Level-2A imagery at coordinate (7915, 4384) near Wayside Elementary School. High-intensity specular flash captured during the orbital transit.",
+      status: "completed"
+    },
+    {
+      date: "2024-07-03 // Sighting",
+      title: "Historical Sighting (Sentinel-2B)",
+      description: "Specular reflection anomaly detected in Sentinel-2B Level-2A imagery at coordinate (7915, 4384) near Wayside Elementary School. High-intensity specular flash captured during the orbital transit.",
+      status: "completed"
+    },
+    {
+      date: "2024-09-03 // Sighting",
+      title: "Historical Sighting (Sentinel-2A)",
+      description: "Specular reflection anomaly detected in Sentinel-2A Level-2A imagery at coordinate (7915, 4384) near Wayside Elementary School. High-intensity specular flash captured during the orbital transit.",
+      status: "completed"
+    },
+    {
+      date: "2024-09-11 // Sighting",
+      title: "Historical Sighting (Sentinel-2B)",
+      description: "Specular reflection anomaly detected in Sentinel-2B Level-2A imagery at coordinate (7915, 4384) near Wayside Elementary School. High-intensity specular flash captured during the orbital transit.",
+      status: "completed"
+    },
+    {
+      date: "2024-09-28 // Sighting",
+      title: "Historical Sighting (Sentinel-2B)",
+      description: "Specular reflection anomaly detected in Sentinel-2B Level-2A imagery at coordinate (7915, 4384) near Wayside Elementary School. High-intensity specular flash captured during the orbital transit.",
+      status: "completed"
+    },
+    {
+      date: "2024-10-21 // Sighting",
+      title: "Historical Sighting (Sentinel-2B)",
+      description: "Specular reflection anomaly detected in Sentinel-2B Level-2A imagery at coordinate (7915, 4384) near Wayside Elementary School. High-intensity specular flash captured during the orbital transit.",
+      status: "completed"
+    },
+    {
+      date: "2024-10-23 // Sighting",
+      title: "Historical Sighting (Sentinel-2A)",
+      description: "Specular reflection anomaly detected in Sentinel-2A Level-2A imagery at coordinate (7915, 4384) near Wayside Elementary School. High-intensity specular flash captured during the orbital transit.",
+      status: "completed"
+    },
+    {
+      date: "2024-10-26 // Sighting",
+      title: "Historical Sighting (Sentinel-2A)",
+      description: "Specular reflection anomaly detected in Sentinel-2A Level-2A imagery at coordinate (7915, 4384) near Wayside Elementary School. High-intensity specular flash captured during the orbital transit.",
+      status: "completed"
+    },
+    {
+      date: "2024-10-31 // Sighting",
+      title: "Historical Sighting (Sentinel-2B)",
+      description: "Specular reflection anomaly detected in Sentinel-2B Level-2A imagery at coordinate (7915, 4384) near Wayside Elementary School. High-intensity specular flash captured during the orbital transit.",
+      status: "completed"
+    },
+    {
+      date: "2024-12-03 // Sighting",
+      title: "Historical Sighting (Sentinel-2A)",
+      description: "Specular reflection anomaly detected in Sentinel-2A Level-2A imagery at coordinate (7915, 4384) near Wayside Elementary School. High-intensity specular flash captured during the orbital transit.",
+      status: "completed"
+    },
+    {
+      date: "2024-12-07 // Sighting",
+      title: "Historical Sighting (Sentinel-2B)",
+      description: "Specular reflection anomaly detected in Sentinel-2B Level-2A imagery at coordinate (7915, 4384) near Wayside Elementary School. High-intensity specular flash captured during the orbital transit.",
+      status: "completed"
+    },
+    {
       date: "12 March 2026 // LEO-SYNC-01",
       title: "Helios-Target Alpha",
       description: "Initial targeting window test targeting LEO reflector array. Tracking window: 12 seconds. Result: Target missed due to 0.004s step-motor tracking delay. Coordinate deviations mapped.",
@@ -254,9 +350,9 @@ document.addEventListener('DOMContentLoaded', () => {
       status: "completed"
     },
     {
-      date: "18 May 2026 // EQ-MERIDIAN-01",
-      title: "Equatorial Meridian Test",
-      description: "Targeting satellite transit along the local meridian. Tracking window: 25 seconds. Result: Locking of mirror reflection beacon. Complete Morse packet sent.",
+      date: "2026-05-18 // L2A Sighting",
+      title: "LEO Equatorial Sighting (Sentinel-2A)",
+      description: "Specular reflection anomaly detected in Sentinel-2A Level-2A imagery at coordinate (7915, 4384) near Wayside Elementary School. Captured during the equatorial meridian tracking test.",
       status: "completed"
     },
     {
