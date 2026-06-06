@@ -236,6 +236,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- FALLBACK LOGS ---
   const fallbackLogs = [
     {
+      date: "2023-11-16 // Sighting",
+      title: "Historical Specular Anomaly (Sentinel-2)",
+      description: "Specular reflection anomaly detected in Sentinel-2 Level-2A imagery at coordinate (7915, 4384), approximately 158m east-southeast of Wayside Elementary School. Represents a historical observation of ground-to-orbit reflection signature.",
+      status: "completed"
+    },
+    {
       date: "12 March 2026 // LEO-SYNC-01",
       title: "Helios-Target Alpha",
       description: "Initial targeting window test targeting LEO reflector array. Tracking window: 12 seconds. Result: Target missed due to 0.004s step-motor tracking delay. Coordinate deviations mapped.",
@@ -250,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       date: "18 May 2026 // EQ-MERIDIAN-01",
       title: "Equatorial Meridian Test",
-      description: "Targeting satellite transit along the local meridian. Tracking window: 25 seconds. Result: Successful locking of mirror reflection beacon. Complete Morse packet sent.",
+      description: "Targeting satellite transit along the local meridian. Tracking window: 25 seconds. Result: Locking of mirror reflection beacon. Complete Morse packet sent.",
       status: "completed"
     },
     {
@@ -307,21 +313,31 @@ document.addEventListener('DOMContentLoaded', () => {
             </a>
           </div>
         `;
-      } else if (item.date && item.date.includes('2026-06-05')) {
-        imageHTML = `
-          <div class="calendar-image" style="margin-top: 1.25rem; text-align: center;">
-            <a href="img/sentinel2c_anomaly_june5.jpg" target="_blank" title="Click to view full image">
-              <img src="img/sentinel2c_anomaly_june5.jpg" alt="Sentinel-2C Specular Anomaly (June 5, 2026)" style="width: 120px; height: 120px; object-fit: cover; border-radius: 4px; border: 1px dashed rgba(255,255,255,0.25); filter: brightness(0.95); transition: all 0.3s; display: inline-block;" onmouseover="this.style.filter='brightness(1.1)'; this.style.borderColor='var(--accent-cyan)';" onmouseout="this.style.filter='brightness(0.95)'; this.style.borderColor='rgba(255,255,255,0.25)';">
-            </a>
-          </div>
-        `;
+      }
+
+      // Resolve link for the title:
+      // 1. If explicit item.link exists, use it.
+      // 2. If it contains a date in YYYY-MM-DD format, construct the Copernicus Browser link dynamically.
+      let titleHTML = item.title;
+      let sightingLink = item.link || '';
+      
+      if (!sightingLink && item.date) {
+        const dateMatch = item.date.match(/(\d{4}-\d{2}-\d{2})/);
+        if (dateMatch) {
+          const cldDate = dateMatch[1];
+          sightingLink = `https://browser.dataspace.copernicus.eu/?zoom=15&lat=40.25141&lng=-74.06918&themeId=DEFAULT-THEME&visualizationUrl=U2FsdGVkX1%2Fh9FzM%2BqVLdNksQrt7sfRfYEvm2gRxtTykRq5iSp4%2Fz%2B8IYbM7nJRriZQWhPQbtiePFta87wcAhA6EUTWucU6uB93Ta6q1bVVCVm%2Br6YHXaWlp0mnEfYis&datasetId=S2_L2A_CDAS&fromTime=${cldDate}T00%3A00%3A00.000Z&toTime=${cldDate}T23%3A59%3A59.999Z&layerId=1_TRUE_COLOR&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE`;
+        }
+      }
+      
+      if (sightingLink) {
+        titleHTML = `<a href="${sightingLink}" target="_blank" class="chalkboard-title-link" style="color: var(--accent-cyan); text-decoration: none; border-bottom: 1px dashed var(--accent-cyan); transition: all 0.3s;" onmouseover="this.style.color='var(--accent-gold)'; this.style.borderColor='var(--accent-gold)';" onmouseout="this.style.color='var(--accent-cyan)'; this.style.borderColor='var(--accent-cyan)';">${item.title}</a>`;
       }
       
       const card = document.createElement('div');
       card.className = cardClass;
       card.innerHTML = `
         <div class="calendar-date">${formattedDate}</div>
-        <h3 class="chalk-header">${item.title}</h3>
+        <h3 class="chalk-header">${titleHTML}</h3>
         <p class="calendar-desc">${descHTML}</p>
         ${imageHTML}
       `;
