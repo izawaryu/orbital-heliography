@@ -264,6 +264,12 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Helios-Sync Beta",
       description: "Next scheduled transit sync. Objective: Establish continuous reflection link for 40 seconds to verify high-bandwidth signal modulation. Calibration targets set.",
       status: "scheduled"
+    },
+    {
+      date: "2026-06-05 // L1C Sighting",
+      title: "Helios-Sync Beta Sighted (Sentinel-2C)",
+      description: "Specular reflection anomaly detected in Sentinel-2C Level-1C raw imagery at coordinate (7915, 4384), approximately 158m east-southeast of Wayside Elementary School. High-intensity specular flash captured during the June 5th orbital transit.",
+      status: "completed"
     }
   ];
 
@@ -298,6 +304,14 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="calendar-image" style="margin-top: 1.25rem;">
             <a href="img/sentinel2_tci_web.jpg" target="_blank" title="Click to view full image">
               <img src="img/sentinel2_tci_web.jpg" alt="Sentinel-2A TCI Web (May 31, 2026)" style="width: 100%; border-radius: 4px; border: 1px dashed rgba(255,255,255,0.25); filter: brightness(0.95); transition: all 0.3s;" onmouseover="this.style.filter='brightness(1.1)'; this.style.borderColor='var(--accent-cyan)';" onmouseout="this.style.filter='brightness(0.95)'; this.style.borderColor='rgba(255,255,255,0.25)';">
+            </a>
+          </div>
+        `;
+      } else if (item.date && item.date.includes('2026-06-05')) {
+        imageHTML = `
+          <div class="calendar-image" style="margin-top: 1.25rem;">
+            <a href="img/sentinel2c_anomaly_june5.jpg" target="_blank" title="Click to view full image">
+              <img src="img/sentinel2c_anomaly_june5.jpg" alt="Sentinel-2C Specular Anomaly (June 5, 2026)" style="width: 100%; border-radius: 4px; border: 1px dashed rgba(255,255,255,0.25); filter: brightness(0.95); transition: all 0.3s;" onmouseover="this.style.filter='brightness(1.1)'; this.style.borderColor='var(--accent-cyan)';" onmouseout="this.style.filter='brightness(0.95)'; this.style.borderColor='rgba(255,255,255,0.25)';">
             </a>
           </div>
         `;
