@@ -356,9 +356,9 @@ document.addEventListener('DOMContentLoaded', () => {
       status: "completed"
     },
     {
-      date: "2026-05-31 // L2A",
-      title: "Sighted",
-      description: "https://browser.dataspace.copernicus.eu/?zoom=17&lat=40.25151&lng=-74.06968&themeId=DEFAULT-THEME&visualizationUrl=U2FsdGVkX18t2dlrNxUtsOodchY8SmNUlh9UxN6T32Mv19zHvF1ySXM8SDoevFkU4UduxQeekt5anyPSRwYl0C6qtQEV7m9o%2BBzIZAzMoqIwh%2BJ0LKaw38WU%2BHEPdC%2Bk&datasetId=S2_L2A_CDAS&fromTime=2026-05-31T00%3A00%3A00.000Z&toTime=2026-05-31T23%3A59%3A59.999Z&layerId=1_TRUE_COLOR&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=single",
+      date: "2026-05-31 // L2A Sighting",
+      title: "Sighted (Sentinel-2A)",
+      description: "Specular reflection anomaly detected in Sentinel-2A Level-2A imagery at coordinate (7915, 4384) near Wayside Elementary School. High-intensity specular flash captured during the orbital transit.",
       status: "completed"
     },
     {
@@ -382,8 +382,29 @@ document.addEventListener('DOMContentLoaded', () => {
     
     calendarGrid.innerHTML = '';
     
+    // Deduplicate logs by date key, keeping the last occurrence (most recent update)
+    const getDateKey = (dateStr) => {
+      if (!dateStr) return '';
+      const match = dateStr.match(/(\d{4}-\d{2}-\d{2})/);
+      if (match) return match[1];
+      const cleanDateStr = dateStr.split(' // ')[0];
+      const d = new Date(cleanDateStr);
+      if (isNaN(d.getTime())) return dateStr;
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+      return `${yyyy}-${mm}-${dd}`;
+    };
+
+    const uniqueLogsMap = new Map();
+    logs.forEach(item => {
+      const key = getDateKey(item.date);
+      uniqueLogsMap.set(key, item);
+    });
+    const uniqueLogs = Array.from(uniqueLogsMap.values());
+    
     // Sort logs chronologically by parsing the date part
-    const sortedLogs = [...logs].sort((a, b) => {
+    const sortedLogs = uniqueLogs.sort((a, b) => {
       const parseDate = (dateStr) => {
         if (!dateStr) return 0;
         const match = dateStr.match(/(\d{4}-\d{2}-\d{2})/);
@@ -418,15 +439,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       let imageHTML = '';
-      if (item.date && item.date.includes('2026-05-31')) {
-        imageHTML = `
-          <div class="calendar-image" style="margin-top: 1.25rem;">
-            <a href="img/sentinel2_tci_web.jpg" target="_blank" title="Click to view full image">
-              <img src="img/sentinel2_tci_web.jpg" alt="Sentinel-2A TCI Web (May 31, 2026)" style="width: 100%; border-radius: 4px; border: 1px dashed rgba(255,255,255,0.25); filter: brightness(0.95); transition: all 0.3s;" onmouseover="this.style.filter='brightness(1.1)'; this.style.borderColor='var(--accent-cyan)';" onmouseout="this.style.filter='brightness(0.95)'; this.style.borderColor='rgba(255,255,255,0.25)';">
-            </a>
-          </div>
-        `;
-      }
 
       // Resolve link for the title:
       // 1. If explicit item.link exists, use it.
