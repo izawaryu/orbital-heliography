@@ -444,13 +444,13 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (item.date) {
         if (item.date.includes('2023-11-16')) {
-          imgPath = 'img/sentinel2_reflection_20231116.jpg';
+          imgPath = 'img/sentinel2_reflection_20231116.jpg?v=1.0.6';
           imgAlt = 'Sentinel-2B True Color Crop (November 16, 2023)';
         } else if (item.date.includes('2026-05-31')) {
-          imgPath = 'img/sentinel2_reflection_20260531.jpg';
+          imgPath = 'img/sentinel2_reflection_20260531.jpg?v=1.0.6';
           imgAlt = 'Sentinel-2A True Color Crop (May 31, 2026)';
         } else if (item.date.includes('2026-06-05')) {
-          imgPath = 'img/sentinel2_reflection_20260605.jpg';
+          imgPath = 'img/sentinel2_reflection_20260605.jpg?v=1.0.6';
           imgAlt = 'Sentinel-2C True Color Crop (June 5, 2026)';
         }
       }
