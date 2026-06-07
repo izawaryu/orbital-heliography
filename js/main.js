@@ -439,31 +439,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       let imageHTML = '';
-      let imgPath = '';
-      let imgAlt = '';
-      
-      if (item.date) {
-        if (item.date.includes('2023-11-16')) {
-          imgPath = 'img/sentinel2_reflection_20231116.jpg?v=1.0.6';
-          imgAlt = 'Sentinel-2B True Color Crop (November 16, 2023)';
-        } else if (item.date.includes('2026-05-31')) {
-          imgPath = 'img/sentinel2_reflection_20260531.jpg?v=1.0.6';
-          imgAlt = 'Sentinel-2A True Color Crop (May 31, 2026)';
-        } else if (item.date.includes('2026-06-05')) {
-          imgPath = 'img/sentinel2_reflection_20260605.jpg?v=1.0.6';
-          imgAlt = 'Sentinel-2C True Color Crop (June 5, 2026)';
-        }
-      }
-      
-      if (imgPath) {
-        imageHTML = `
-          <div class="calendar-image" style="margin-top: 1.25rem;">
-            <a href="${imgPath}" target="_blank" title="Click to view full image">
-              <img src="${imgPath}" alt="${imgAlt}" style="width: 100%; border-radius: 4px; border: 1px dashed rgba(255,255,255,0.25); filter: brightness(0.95); transition: all 0.3s;" onmouseover="this.style.filter='brightness(1.1)'; this.style.borderColor='var(--accent-cyan)';" onmouseout="this.style.filter='brightness(0.95)'; this.style.borderColor='rgba(255,255,255,0.25)';">
-            </a>
-          </div>
-        `;
-      }
 
       // Resolve link for the title:
       // 1. If explicit item.link exists, use it.
