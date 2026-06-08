@@ -449,7 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ];
       
       if (availableImageDates.includes(dateDigits)) {
-        const imgPath = `img/sentinel2_reflection_${dateDigits}.jpg?v=1.0.16`;
+        const imgPath = `img/sentinel2_reflection_${dateDigits}.jpg?v=1.0.17`;
         const imgAlt = `Sentinel-2 True Color Crop (${formattedDate})`;
         imageHTML = `
           <div class="calendar-image" style="margin: 1.25rem 0;">
