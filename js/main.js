@@ -439,6 +439,26 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       let imageHTML = '';
+      const dateKey = getDateKey(item.date);
+      const dateDigits = dateKey.replace(/-/g, '');
+      const availableImageDates = [
+        '20231116', '20240409', '20240416', '20240501', '20240531',
+        '20240618', '20240703', '20240903', '20240911', '20241021',
+        '20241023', '20241026', '20241031', '20241202', '20241207',
+        '20260518', '20260605', '20260607'
+      ];
+      
+      if (availableImageDates.includes(dateDigits)) {
+        const imgPath = `img/sentinel2_reflection_${dateDigits}.jpg?v=1.0.8`;
+        const imgAlt = `Sentinel-2 True Color Crop (${formattedDate})`;
+        imageHTML = `
+          <div class="calendar-image" style="margin-top: 1.25rem;">
+            <a href="${imgPath}" target="_blank" title="Click to view full image">
+              <img src="${imgPath}" alt="${imgAlt}" style="width: 100%; border-radius: 4px; border: 1px dashed rgba(255,255,255,0.25); filter: brightness(0.95); transition: all 0.3s;" onmouseover="this.style.filter='brightness(1.1)'; this.style.borderColor='var(--accent-cyan)';" onmouseout="this.style.filter='brightness(0.95)'; this.style.borderColor='rgba(255,255,255,0.25)';">
+            </a>
+          </div>
+        `;
+      }
 
       // Resolve link for the title:
       // 1. If explicit item.link exists, use it.
