@@ -449,10 +449,10 @@ document.addEventListener('DOMContentLoaded', () => {
       ];
       
       if (availableImageDates.includes(dateDigits)) {
-        const imgPath = `img/sentinel2_reflection_${dateDigits}.jpg?v=1.0.8`;
+        const imgPath = `img/sentinel2_reflection_${dateDigits}.jpg?v=1.0.9`;
         const imgAlt = `Sentinel-2 True Color Crop (${formattedDate})`;
         imageHTML = `
-          <div class="calendar-image" style="margin-top: 1.25rem;">
+          <div class="calendar-image" style="margin: 1.25rem 0;">
             <a href="${imgPath}" target="_blank" title="Click to view full image">
               <img src="${imgPath}" alt="${imgAlt}" style="width: 100%; border-radius: 4px; border: 1px dashed rgba(255,255,255,0.25); filter: brightness(0.95); transition: all 0.3s;" onmouseover="this.style.filter='brightness(1.1)'; this.style.borderColor='var(--accent-cyan)';" onmouseout="this.style.filter='brightness(0.95)'; this.style.borderColor='rgba(255,255,255,0.25)';">
             </a>
@@ -483,8 +483,8 @@ document.addEventListener('DOMContentLoaded', () => {
       card.innerHTML = `
         <div class="calendar-date">${formattedDate}</div>
         <h3 class="chalk-header">${titleHTML}</h3>
-        <p class="calendar-desc">${descHTML}</p>
         ${imageHTML}
+        <p class="calendar-desc">${descHTML}</p>
       `;
       calendarGrid.appendChild(card);
     });
