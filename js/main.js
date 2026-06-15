@@ -445,11 +445,11 @@ document.addEventListener('DOMContentLoaded', () => {
         '20231116', '20240409', '20240416', '20240501', '20240531',
         '20240618', '20240703', '20240903', '20240911', '20241021',
         '20241023', '20241026', '20241031', '20241202', '20241207',
-        '20260518', '20260605', '20260607'
+        '20260518', '20260605', '20260607', '20260615'
       ];
       
       if (availableImageDates.includes(dateDigits)) {
-        const imgPath = `img/sentinel2_reflection_${dateDigits}.jpg?v=1.0.17`;
+        const imgPath = `img/sentinel2_reflection_${dateDigits}.jpg?v=1.0.18`;
         const imgAlt = `Sentinel-2 True Color Crop (${formattedDate})`;
         imageHTML = `
           <div class="calendar-image" style="margin: 1.25rem 0;">
