@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const sunAz = (satAz + 180) % 360;
       const sunElev = 45;
       const mirrorAz = (sunAz + satAz) / 2;
-      const mirrorTilt = (sunElev + satElev) / 4;
+      const mirrorTilt = 90 - ((sunElev + satElev) / 4);
       return { sunAz: sunAz.toFixed(1), sunElev: sunElev.toFixed(1), mirrorAz: mirrorAz.toFixed(1), mirrorTilt: mirrorTilt.toFixed(1) };
     }
 
@@ -298,12 +298,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const mirrorElev = Math.asin(normM[2]) * (180 / Math.PI);
     const mirrorAz = (Math.atan2(normM[0], normM[1]) * (180 / Math.PI) + 360) % 360;
+    const mirrorTilt = 90 - mirrorElev;
 
     return {
       sunAz: sunAz.toFixed(1),
       sunElev: sunElev.toFixed(1),
       mirrorAz: mirrorAz.toFixed(1),
-      mirrorTilt: mirrorElev.toFixed(1)
+      mirrorTilt: mirrorTilt.toFixed(1)
     };
   };
 
