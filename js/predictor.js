@@ -233,32 +233,32 @@ document.addEventListener('DOMContentLoaded', () => {
     pass.azAtMax = bestAz;
     pass.distAtMax = bestDist;
 
-    // Evaluate single point in time: EXACT MOMENT 1 SECOND AFTER PEAK (TCA + 1s)
-    const tcaPlus1 = new Date(bestTime.getTime() + 1000);
-    const pv1 = satellite.propagate(satrec, tcaPlus1);
-    if (pv1.position && typeof pv1.position !== 'boolean') {
-      const gmst1 = satellite.gstime(tcaPlus1);
-      const posEcf1 = satellite.eciToEcf(pv1.position, gmst1);
-      const look1 = satellite.ecfToLookAngles(observerGd, posEcf1);
-      const elev1 = satellite.radiansToDegrees(look1.elevation);
-      const az1 = satellite.radiansToDegrees(look1.azimuth);
-      const dist1 = look1.rangeSat;
-      const geom1 = calculateHeliostatGeometry(tcaPlus1, az1, elev1);
+    // Evaluate single point in time: EXACT MOMENT (TCA + offsetSeconds)
+    const targetTime = new Date(bestTime.getTime() + offsetSeconds * 1000);
+    const pvTarget = satellite.propagate(satrec, targetTime);
+    if (pvTarget.position && typeof pvTarget.position !== 'boolean') {
+      const gmstTarget = satellite.gstime(targetTime);
+      const posEcfTarget = satellite.eciToEcf(pvTarget.position, gmstTarget);
+      const lookTarget = satellite.ecfToLookAngles(observerGd, posEcfTarget);
+      const elevTarget = satellite.radiansToDegrees(lookTarget.elevation);
+      const azTarget = satellite.radiansToDegrees(lookTarget.azimuth);
+      const distTarget = lookTarget.rangeSat;
+      const geomTarget = calculateHeliostatGeometry(targetTime, azTarget, elevTarget);
 
       pass.targetMoment = {
-        time: tcaPlus1,
-        elev: elev1,
-        az: az1,
-        dist: dist1,
-        geom: geom1
+        time: targetTime,
+        elev: elevTarget,
+        az: azTarget,
+        dist: distTarget,
+        geom: geomTarget
       };
     } else {
       pass.targetMoment = {
-        time: tcaPlus1,
+        time: targetTime,
         elev: bestElev,
         az: bestAz,
         dist: bestDist,
-        geom: calculateHeliostatGeometry(tcaPlus1, bestAz, bestElev)
+        geom: calculateHeliostatGeometry(targetTime, bestAz, bestElev)
       };
     }
   };
@@ -327,16 +327,30 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!nextPass) {
       if (countdownEl) countdownEl.textContent = 'NO PASSES FOUND';
       if (tcaDisplay) tcaDisplay.textContent = 'N/A';
+      if (maxElevDisplay) maxElevDisplay.textContent = '--°';
+      if (azDisplay) azDisplay.textContent = '--°';
+      if (distDisplay) distDisplay.textContent = '-- km';
+      if (sunAzEl) sunAzEl.textContent = '--° / --°';
+      if (mirrorAzEl) mirrorAzEl.textContent = '--°';
+      if (mirrorTiltEl) mirrorTiltEl.textContent = '--°';
       return;
     }
 
-    if (tcaDisplay) tcaDisplay.textContent = formatDate(nextPass.tca);
-    if (maxElevDisplay) maxElevDisplay.textContent = `${nextPass.maxElev.toFixed(1)}°`;
-    if (azDisplay) azDisplay.textContent = `${nextPass.azAtMax.toFixed(1)}°`;
-    if (distDisplay) distDisplay.textContent = `${Math.round(nextPass.distAtMax)} km`;
+    const targetMoment = nextPass.targetMoment || {
+      time: new Date(nextPass.tca.getTime() + offsetSeconds * 1000),
+      elev: nextPass.maxElev,
+      az: nextPass.azAtMax,
+      dist: nextPass.distAtMax,
+      geom: calculateHeliostatGeometry(nextPass.tca, nextPass.azAtMax, nextPass.maxElev)
+    };
+
+    if (tcaDisplay) tcaDisplay.textContent = formatDate(targetMoment.time);
+    if (maxElevDisplay) maxElevDisplay.textContent = `${targetMoment.elev.toFixed(1)}°`;
+    if (azDisplay) azDisplay.textContent = `${targetMoment.az.toFixed(1)}°`;
+    if (distDisplay) distDisplay.textContent = `${Math.round(targetMoment.dist)} km`;
 
     // Solar Reflection Geometry
-    const geom = calculateHeliostatGeometry(nextPass.tca, nextPass.azAtMax, nextPass.maxElev);
+    const geom = targetMoment.geom || calculateHeliostatGeometry(targetMoment.time, targetMoment.az, targetMoment.elev);
     if (sunAzEl) sunAzEl.textContent = `${geom.sunAz}° / ${geom.sunElev}°`;
     if (mirrorAzEl) mirrorAzEl.textContent = `${geom.mirrorAz}°`;
     if (mirrorTiltEl) mirrorTiltEl.textContent = `${geom.mirrorTilt}°`;
@@ -367,6 +381,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const renderPassesTable = () => {
     const tableBody = document.getElementById('passes-table-body');
+    const tableHeaderSub = document.getElementById('passes-table-sub');
+    const colHeaderTimestamp = document.getElementById('col-header-timestamp');
+
+    const sign = offsetSeconds >= 0 ? '+' : '';
+    const offsetLabel = `${sign}${offsetSeconds}s`;
+
+    if (tableHeaderSub) tableHeaderSub.textContent = `Telemetry @ Peak ${offsetLabel}`;
+    if (colHeaderTimestamp) colHeaderTimestamp.textContent = `Timestamp (TCA ${offsetLabel})`;
+
     if (!tableBody) return;
 
     tableBody.innerHTML = '';
@@ -395,7 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     activePasses.forEach((p, idx) => {
       const tr = document.createElement('tr');
-      const targetTime = (p.targetMoment && p.targetMoment.time) ? p.targetMoment.time : new Date(p.tca.getTime() + 1000);
+      const targetTime = (p.targetMoment && p.targetMoment.time) ? p.targetMoment.time : new Date(p.tca.getTime() + offsetSeconds * 1000);
       const dateStr = targetTime.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
       const timeStr = targetTime.toLocaleTimeString('en-US', { hour12: false });
       
@@ -456,7 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- SATELLITE SELECTION BUTTONS ---
-  const satBtns = document.querySelectorAll('.sat-btn');
+  const satBtns = document.querySelectorAll('.sat-btn:not(.offset-btn):not(#filter-strict-btn):not(#filter-all-btn)');
   satBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       satBtns.forEach(b => b.classList.remove('active'));
@@ -487,6 +510,53 @@ document.addEventListener('DOMContentLoaded', () => {
       filterStrictBtn.classList.remove('active');
       filterStrict = false;
       calculatePasses();
+    });
+  }
+
+  // --- TIME OFFSET SELECTOR (Peak + Δt) ---
+  const offsetBtns = document.querySelectorAll('.offset-btn');
+  const customOffsetInput = document.getElementById('custom-offset-input');
+  const offsetBadge = document.getElementById('offset-display-badge');
+
+  const setOffset = (seconds, activeBtn = null) => {
+    offsetSeconds = seconds;
+    const sign = offsetSeconds >= 0 ? '+' : '';
+    if (offsetBadge) offsetBadge.textContent = `${sign}${offsetSeconds} second${Math.abs(offsetSeconds) === 1 ? '' : 's'}`;
+
+    offsetBtns.forEach(btn => {
+      if (activeBtn) {
+        btn.classList.remove('active');
+      } else {
+        if (parseInt(btn.getAttribute('data-offset'), 10) === offsetSeconds) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      }
+    });
+
+    if (activeBtn) activeBtn.classList.add('active');
+
+    if (customOffsetInput && parseInt(customOffsetInput.value, 10) !== offsetSeconds) {
+      customOffsetInput.value = offsetSeconds;
+    }
+
+    calculatePasses();
+  };
+
+  offsetBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const val = parseInt(btn.getAttribute('data-offset'), 10);
+      setOffset(val, btn);
+    });
+  });
+
+  if (customOffsetInput) {
+    customOffsetInput.addEventListener('input', () => {
+      const val = parseInt(customOffsetInput.value, 10);
+      if (!isNaN(val)) {
+        setOffset(val, null);
+      }
     });
   }
 
