@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  let activeSatId = '42063'; // Default to Sentinel-2B
+  let activeSatId = '40697'; // Default to Sentinel-2A
   let filterStrict = true; // Default to Strict Intercept Window (>=75 deg, 9AM-3PM local)
   let userLocation = {
     lat: 40.2514,
