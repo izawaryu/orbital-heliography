@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   let activeSatId = '42063'; // Default to Sentinel-2B
+  let filterStrict = true; // Default to Strict Intercept Window (>=75 deg, 9AM-3PM local)
   let userLocation = {
     lat: 40.2514,
     lon: -74.0692,
@@ -134,14 +135,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const startTime = new Date();
     const passes = [];
-    const searchDurationDays = 7;
+    const searchDurationDays = 10; // Search across next 10 days
     const searchEnd = new Date(startTime.getTime() + searchDurationDays * 86400 * 1000);
 
     let curr = new Date(startTime.getTime());
     let inPass = false;
     let currentPass = null;
 
-    // Step 1: Coarse 45-second step search across 7 days
+    // Step 1: Search across 10 days
     while (curr < searchEnd) {
       const positionAndVelocity = satellite.propagate(satrec, curr);
       if (positionAndVelocity.position && typeof positionAndVelocity.position !== 'boolean') {
@@ -180,9 +181,17 @@ document.addEventListener('DOMContentLoaded', () => {
             // Refine peak TCA down to 1-second precision
             refinePassPeak(satrec, observerGd, currentPass);
             
-            passes.push(currentPass);
+            // Apply Filters:
+            // 1. Peak elevation >= 75.0 degrees (if strict) or >= 10.0 degrees (if all)
+            // 2. Local time at TCA between 9:00 AM and 3:00 PM (9 <= localHour < 15)
+            const localHour = currentPass.tca.getHours(); // Local hour 0-23
+            const matchesElev = filterStrict ? (currentPass.maxElev >= 75.0) : (currentPass.maxElev >= 10.0);
+            const matchesTime = filterStrict ? (localHour >= 9 && localHour < 15) : true;
+
+            if (matchesElev && matchesTime) {
+              passes.push(currentPass);
+            }
             currentPass = null;
-            if (passes.length >= 10) break; // Limit to 10 passes
           }
         }
       }
@@ -331,6 +340,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!tableBody) return;
 
     tableBody.innerHTML = '';
+
+    if (activePasses.length === 0) {
+      tableBody.innerHTML = `
+        <tr>
+          <td colspan="6" style="text-align: center; color: var(--accent-gold); padding: 1.5rem 1rem;">
+            No passes matching <strong>Peak Elev ≥ 75°</strong> between <strong>9:00 AM – 3:00 PM Local</strong> found in next 10 days.<br>
+            <button id="switch-all-passes-btn" style="margin-top: 0.75rem; background: rgba(0,240,240,0.12); border: 1px dashed var(--accent-cyan); color: var(--accent-cyan); padding: 0.4rem 1rem; border-radius: 4px; cursor: pointer; font-family: var(--font-mono); font-size: 0.75rem;">
+              View All Passes (≥10° Elev)
+            </button>
+          </td>
+        </tr>
+      `;
+
+      const switchBtn = document.getElementById('switch-all-passes-btn');
+      if (switchBtn) {
+        switchBtn.addEventListener('click', () => {
+          const allBtn = document.getElementById('filter-all-btn');
+          if (allBtn) allBtn.click();
+        });
+      }
+      return;
+    }
+
     activePasses.forEach((p, idx) => {
       const tr = document.createElement('tr');
       const dateStr = p.tca.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -400,6 +432,26 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
+
+  // --- PASS FILTER BUTTONS ---
+  const filterStrictBtn = document.getElementById('filter-strict-btn');
+  const filterAllBtn = document.getElementById('filter-all-btn');
+
+  if (filterStrictBtn && filterAllBtn) {
+    filterStrictBtn.addEventListener('click', () => {
+      filterStrictBtn.classList.add('active');
+      filterAllBtn.classList.remove('active');
+      filterStrict = true;
+      calculatePasses();
+    });
+
+    filterAllBtn.addEventListener('click', () => {
+      filterAllBtn.classList.add('active');
+      filterStrictBtn.classList.remove('active');
+      filterStrict = false;
+      calculatePasses();
+    });
+  }
 
   // INITIAL LOAD
   initMap();
