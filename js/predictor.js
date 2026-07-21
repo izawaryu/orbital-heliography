@@ -514,28 +514,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- TIME OFFSET SELECTOR (Peak + Δt) ---
-  const offsetBtns = document.querySelectorAll('.offset-btn');
   const customOffsetInput = document.getElementById('custom-offset-input');
+  const offsetDecrementBtn = document.getElementById('offset-decrement-btn');
+  const offsetIncrementBtn = document.getElementById('offset-increment-btn');
   const offsetBadge = document.getElementById('offset-display-badge');
 
-  const setOffset = (seconds, activeBtn = null) => {
+  const setOffset = (seconds) => {
     offsetSeconds = seconds;
     const sign = offsetSeconds >= 0 ? '+' : '';
     if (offsetBadge) offsetBadge.textContent = `${sign}${offsetSeconds} second${Math.abs(offsetSeconds) === 1 ? '' : 's'}`;
-
-    offsetBtns.forEach(btn => {
-      if (activeBtn) {
-        btn.classList.remove('active');
-      } else {
-        if (parseInt(btn.getAttribute('data-offset'), 10) === offsetSeconds) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
-        }
-      }
-    });
-
-    if (activeBtn) activeBtn.classList.add('active');
 
     if (customOffsetInput && parseInt(customOffsetInput.value, 10) !== offsetSeconds) {
       customOffsetInput.value = offsetSeconds;
@@ -544,19 +531,32 @@ document.addEventListener('DOMContentLoaded', () => {
     calculatePasses();
   };
 
-  offsetBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const val = parseInt(btn.getAttribute('data-offset'), 10);
-      setOffset(val, btn);
-    });
-  });
-
   if (customOffsetInput) {
     customOffsetInput.addEventListener('input', () => {
       const val = parseInt(customOffsetInput.value, 10);
       if (!isNaN(val)) {
-        setOffset(val, null);
+        setOffset(val);
       }
+    });
+
+    customOffsetInput.addEventListener('change', () => {
+      let val = parseInt(customOffsetInput.value, 10);
+      if (isNaN(val)) val = 0;
+      setOffset(val);
+    });
+  }
+
+  if (offsetDecrementBtn) {
+    offsetDecrementBtn.addEventListener('click', () => {
+      const currentVal = parseInt(customOffsetInput ? customOffsetInput.value : offsetSeconds, 10) || 0;
+      setOffset(currentVal - 1);
+    });
+  }
+
+  if (offsetIncrementBtn) {
+    offsetIncrementBtn.addEventListener('click', () => {
+      const currentVal = parseInt(customOffsetInput ? customOffsetInput.value : offsetSeconds, 10) || 0;
+      setOffset(currentVal + 1);
     });
   }
 

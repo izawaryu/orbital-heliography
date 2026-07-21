@@ -119,19 +119,16 @@
             <span id="offset-display-badge" style="color: var(--accent-cyan);">+1 second</span>
           </div>
 
-          <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.5rem; flex-wrap: wrap;">
-            <div class="sat-btn-group" style="flex: 1; min-width: 200px;">
-              <button class="sat-btn offset-btn" data-offset="-2">-2s</button>
-              <button class="sat-btn offset-btn" data-offset="-1">-1s</button>
-              <button class="sat-btn offset-btn" data-offset="0">0s (Peak)</button>
-              <button class="sat-btn offset-btn active" data-offset="1">+1s</button>
-              <button class="sat-btn offset-btn" data-offset="2">+2s</button>
-              <button class="sat-btn offset-btn" data-offset="5">+5s</button>
-            </div>
-            <div style="display: flex; align-items: center; gap: 0.35rem; font-family: var(--font-mono); font-size: 0.8rem; color: rgba(255,255,255,0.7);">
-              <label for="custom-offset-input">Custom:</label>
-              <input type="number" id="custom-offset-input" value="1" step="1" min="-60" max="60" style="width: 55px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: var(--accent-cyan); font-family: var(--font-mono); font-size: 0.85rem; padding: 0.3rem; border-radius: 4px; text-align: center;">
-              <span>sec</span>
+          <div class="offset-input-wrap" style="display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-top: 0.5rem; background: rgba(0, 240, 240, 0.04); border: 1px dashed var(--border-color); padding: 0.6rem 0.85rem; border-radius: 6px;">
+            <label for="custom-offset-input" style="font-family: var(--font-heading); font-size: 0.88rem; color: rgba(255, 255, 255, 0.85); font-style: italic;">
+              Offset from Peak (sec):
+            </label>
+            <div style="display: flex; align-items: center; gap: 0.35rem;">
+              <button id="offset-decrement-btn" type="button" aria-label="Decrease offset" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.25); color: var(--accent-cyan); width: 32px; height: 32px; border-radius: 4px; cursor: pointer; font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; justify-content: center; user-select: none; transition: var(--transition-smooth);">−</button>
+              
+              <input type="number" id="custom-offset-input" value="1" step="1" min="-60" max="60" style="width: 65px; height: 32px; background: rgba(0, 0, 0, 0.5); border: 1px solid var(--accent-cyan); color: var(--accent-cyan); font-family: var(--font-mono); font-size: 0.95rem; font-weight: bold; text-align: center; border-radius: 4px;">
+              
+              <button id="offset-increment-btn" type="button" aria-label="Increase offset" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.25); color: var(--accent-cyan); width: 32px; height: 32px; border-radius: 4px; cursor: pointer; font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; justify-content: center; user-select: none; transition: var(--transition-smooth);">+</button>
             </div>
           </div>
 
@@ -273,7 +270,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
 
   <!-- Predictor Script & Nav Handler -->
-  <script src="js/main.js?v=1.0.25"></script>
-  <script src="js/predictor.js?v=1.0.25"></script>
+  <script src="js/main.js?v=1.0.26"></script>
+  <script src="js/predictor.js?v=1.0.26"></script>
 </body>
 </html>
