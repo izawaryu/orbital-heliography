@@ -232,6 +232,35 @@ document.addEventListener('DOMContentLoaded', () => {
     pass.maxElev = bestElev;
     pass.azAtMax = bestAz;
     pass.distAtMax = bestDist;
+
+    // Evaluate single point in time: EXACT MOMENT 1 SECOND AFTER PEAK (TCA + 1s)
+    const tcaPlus1 = new Date(bestTime.getTime() + 1000);
+    const pv1 = satellite.propagate(satrec, tcaPlus1);
+    if (pv1.position && typeof pv1.position !== 'boolean') {
+      const gmst1 = satellite.gstime(tcaPlus1);
+      const posEcf1 = satellite.eciToEcf(pv1.position, gmst1);
+      const look1 = satellite.ecfToLookAngles(observerGd, posEcf1);
+      const elev1 = satellite.radiansToDegrees(look1.elevation);
+      const az1 = satellite.radiansToDegrees(look1.azimuth);
+      const dist1 = look1.rangeSat;
+      const geom1 = calculateHeliostatGeometry(tcaPlus1, az1, elev1);
+
+      pass.targetMoment = {
+        time: tcaPlus1,
+        elev: elev1,
+        az: az1,
+        dist: dist1,
+        geom: geom1
+      };
+    } else {
+      pass.targetMoment = {
+        time: tcaPlus1,
+        elev: bestElev,
+        az: bestAz,
+        dist: bestDist,
+        geom: calculateHeliostatGeometry(tcaPlus1, bestAz, bestElev)
+      };
+    }
   };
 
   // --- HELIOSTATIC REFLECTION GEOMETRY (kuzuebiko.py bisect_vectors) ---
@@ -365,17 +394,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     activePasses.forEach((p, idx) => {
       const tr = document.createElement('tr');
-      const dateStr = p.tca.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-      const timeStr = p.tca.toLocaleTimeString('en-US', { hour12: false });
-      const durSecs = Math.round((p.los.getTime() - p.aos.getTime()) / 1000);
+      const targetTime = (p.targetMoment && p.targetMoment.time) ? p.targetMoment.time : new Date(p.tca.getTime() + 1000);
+      const dateStr = targetTime.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      const timeStr = targetTime.toLocaleTimeString('en-US', { hour12: false });
+      
+      const elevVal = p.targetMoment ? p.targetMoment.elev.toFixed(1) : p.maxElev.toFixed(1);
+      const azVal = p.targetMoment ? p.targetMoment.az.toFixed(1) : p.azAtMax.toFixed(1);
+      const distVal = p.targetMoment ? Math.round(p.targetMoment.dist) : Math.round(p.distAtMax);
+      const mirrorVal = (p.targetMoment && p.targetMoment.geom) 
+        ? `Az ${p.targetMoment.geom.mirrorAz}° / Tilt ${p.targetMoment.geom.mirrorTilt}°` 
+        : '--';
 
       tr.innerHTML = `
         <td>#${idx + 1}</td>
         <td>${dateStr} ${timeStr} UTC</td>
-        <td><strong style="color: var(--accent-cyan);">${p.maxElev.toFixed(1)}°</strong></td>
-        <td>${p.azAtMax.toFixed(1)}°</td>
-        <td>${durSecs}s</td>
-        <td>${Math.round(p.distAtMax)} km</td>
+        <td><strong style="color: var(--accent-cyan);">${elevVal}°</strong></td>
+        <td>${azVal}°</td>
+        <td style="color: var(--accent-gold); font-size: 0.78rem; font-family: var(--font-mono);">${mirrorVal}</td>
+        <td>${distVal} km</td>
       `;
       tableBody.appendChild(tr);
     });
