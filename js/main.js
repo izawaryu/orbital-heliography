@@ -372,6 +372,12 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Helios-Sync Beta Sighted (Sentinel-2C)",
       description: "Specular reflection anomaly detected in Sentinel-2C Level-1C raw imagery at coordinate (7915, 4384), approximately 158m east-southeast of Wayside Elementary School. High-intensity specular flash captured during the June 5th orbital transit.",
       status: "completed"
+    },
+    {
+      date: "2026-07-20 // Sighting",
+      title: "Sentinel-2B // 42063",
+      description: "Bright specular reflection detected",
+      status: "completed"
     }
   ];
 
@@ -445,11 +451,11 @@ document.addEventListener('DOMContentLoaded', () => {
         '20231116', '20240409', '20240416', '20240501', '20240531',
         '20240618', '20240703', '20240903', '20240911', '20241021',
         '20241023', '20241026', '20241031', '20241202', '20241207',
-        '20260518', '20260605', '20260607', '20260615', '20260713'
+        '20260518', '20260605', '20260607', '20260615', '20260713', '20260720'
       ];
       
       if (availableImageDates.includes(dateDigits)) {
-        const imgPath = `img/sentinel2_reflection_${dateDigits}.jpg?v=1.0.18`;
+        const imgPath = `img/sentinel2_reflection_${dateDigits}.jpg?v=1.0.20`;
         const imgAlt = `Sentinel-2 True Color Crop (${formattedDate})`;
         imageHTML = `
           <div class="calendar-image" style="margin: 1.25rem 0;">
